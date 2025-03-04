@@ -42,7 +42,7 @@ X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
 X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
 
 #initialize model
-log_reg_model = logreg.LogisticRegressor(num_feats=X_train.shape[1])
+log_reg_model = logreg.LogisticRegressor(num_feats=6)
 
 #train model
 log_reg_model.train_model(X_train, y_train, X_val, y_val)
