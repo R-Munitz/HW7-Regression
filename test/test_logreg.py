@@ -38,8 +38,8 @@ X_train = sc.fit_transform(X_train)
 X_val = sc.transform(X_val)
 
 #add bias term - padding data with vector of ones for bias term
-X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
-X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
+#X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
+#X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
 
 #initialize model
 log_reg_model = logreg.LogisticRegressor(num_feats=6)
