@@ -29,7 +29,7 @@ features = [
 	'AGE_DIAGNOSIS'
 ]
 X = df[features].values
-#add bias term
+#add bias term - padding data with vector of ones for bias term
 X = np.hstack([X, np.ones((X.shape[0], 1))])
 y = df['NSCLC'].values # 1 = NSCLC and 0 = small cell 
 
