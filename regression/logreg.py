@@ -119,7 +119,7 @@ class LogisticRegressor(BaseRegressor):
     
     def make_prediction(self, X) -> np.array:
         """
-        TODO: Implement logistic function to get estimates (y_pred) for input X values. The logistic
+         Implement logistic function to get estimates (y_pred) for input X values. The logistic
         function is a transformation of the linear model into an "S-shaped" curve that can be used
         for binary classification.
 
@@ -129,11 +129,22 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             The predicted labels (y_pred) for given X.
         """
-        pass
+        
+        #prediction = weights x inputs + bias
+
+        #calculate prediction
+        z = np.sum(self.W * X, axis=1)   
+    
+        # apply sigmoid 
+        y_pred = 1 / (1 + np.exp(-z)) 
+
+        return y_pred 
+
+
     
     def loss_function(self, y_true, y_pred) -> float:
         """
-        TODO: Implement binary cross entropy loss, which assumes that the true labels are either
+        Implement binary cross entropy loss, which assumes that the true labels are either
         0 or 1. (This can be extended to more than two classes, but here we have just two.)
 
         Arguments:
@@ -143,11 +154,18 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             The mean loss (a single number).
         """
-        pass
+
+        # binary cross entropy - from provided resource https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html
+        y_zero_loss = y_true * np.log(y_pred + 1e-9)
+        y_one_loss = (1-y_true) * np.log(1 - y_pred + 1e-9)
+        return -np.mean(y_zero_loss + y_one_loss)
+        
+
+      
         
     def calculate_gradient(self, y_true, X) -> np.ndarray:
         """
-        TODO: Calculate the gradient of the loss function with respect to the given data. This
+        Calculate the gradient of the loss function with respect to the given data. This
         will be used to update the weights during training.
 
         Arguments:
@@ -157,4 +175,11 @@ class LogisticRegressor(BaseRegressor):
         Returns: 
             Vector of gradients.
         """
-        pass
+        
+        # calculate gradient of loss function (with respect to weights and bias)
+        y_pred = self.make_prediction(X)
+        return np.sum((y_true - y_pred).reshape((-1,1)) * X, axis = 0) 
+    
+    
+       
+        
