@@ -44,9 +44,6 @@ X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
 #initialize model
 log_reg_model = logreg.LogisticRegressor(num_feats=6)
 
-#train model
-log_reg_model.train_model(X_train, y_train, X_val, y_val)
-
 
 """
 #load dataset
@@ -78,15 +75,20 @@ log_reg_model.train_model(X_train, y_train, X_val, y_val)
 
 def test_prediction():
 	#assert that predictions are within valid range 	[0,1]
-	
 
-	y_pred = log_reg_model.make_prediction(X_train)
+	#add bias term
+	X_test = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
+
+	y_pred = log_reg_model.make_prediction(X_test)
 	assert np.all(y_pred >= 0) and np.all(y_pred <= 1)
 
 def test_loss_function():
-	#asset that loss function returns a + scalar 
+	#assert that loss function returns a + scalar 
 
-	y_pred = log_reg_model.make_prediction(X_train)
+	#add bias term
+	X_test = np.hstack([X_train, np.ones((X_train.shape[0], 1))]) 
+
+	y_pred = log_reg_model.make_prediction(X_test)
 	loss = log_reg_model.loss_function(y_train, y_pred)
 	assert loss >= 0
 	assert isinstance(loss, float)
@@ -95,14 +97,21 @@ def test_loss_function():
 
 def test_gradient():
 	#assert that gradient is of same shape as weights
-	gradient = log_reg_model.calculate_gradient(y_train, X_train)
+
+	#add bias term
+	X_test = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
+
+	gradient = log_reg_model.calculate_gradient(y_train, X_test)
 	assert gradient.shape == log_reg_model.W.shape
 	assert gradient.shape == (X_train.shape[1] + 1, 1) #+1 for bias term
 	
 
 def test_training():
 	#assert that loss history is not empty after training
+
+	#don't need to add bias term here
+
 	log_reg_model.train_model(X_train, y_train, X_val, y_val)
 	assert len(log_reg_model.loss_hist_train) > 0
 
-	pass
+	
