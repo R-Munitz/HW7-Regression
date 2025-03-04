@@ -15,7 +15,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from regression import (logreg, utils)
 
-# (you will probably need to import more things here)
 
 #load dataset
 df = pd.read_csv("./data/nsclc.csv")
@@ -30,6 +29,8 @@ features = [
 	'AGE_DIAGNOSIS'
 ]
 X = df[features].values
+#add bias term
+X = np.hstack([X, np.ones((X.shape[0], 1))])
 y = df['NSCLC'].values # 1 = NSCLC and 0 = small cell 
 
 #initialize model
