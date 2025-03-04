@@ -17,7 +17,7 @@ from regression import (logreg, utils)
 from sklearn.preprocessing import StandardScaler
 
 
-#Load data
+#load data
 X_train, X_val, y_train, y_val = utils.loadDataset(
 	features=[
 		'Penicillin V Potassium 500 MG',
@@ -36,6 +36,11 @@ X_train, X_val, y_train, y_val = utils.loadDataset(
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_val = sc.transform(X_val)
+
+#add bias term - padding data with vector of ones for bias term
+X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
+X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
+
 
 """
 #load dataset
