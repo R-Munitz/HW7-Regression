@@ -41,6 +41,12 @@ X_val = sc.transform(X_val)
 X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
 X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
 
+#initialize model
+log_reg_model = logreg.LogisticRegressor(num_feats=X_train.shape[1])
+
+#train model
+log_reg_model.train_model(X_train, y_train, X_val, y_val)
+
 
 """
 #load dataset
@@ -59,7 +65,7 @@ X = df[features].values
 #add bias term - padding data with vector of ones for bias term
 #X = np.hstack([X, np.ones((X.shape[0], 1))])
 y = df['NSCLC'].values # 1 = NSCLC and 0 = small cell 
-"""
+
 
 #initialize model
 log_reg_model = logreg.LogisticRegressor(num_feats=6)
@@ -68,10 +74,11 @@ log_reg_model = logreg.LogisticRegressor(num_feats=6)
 
 log_reg_model.train_model(X_train, y_train, X_val, y_val)
 
+"""
 
 def test_prediction():
 	#assert that predictions are within valid range 	[0,1]
-	#may have to add bias col first to X
+	
 
 	y_pred = log_reg_model.make_prediction(X_train)
 	assert np.all(y_pred >= 0) and np.all(y_pred <= 1)
