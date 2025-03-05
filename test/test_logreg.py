@@ -60,7 +60,7 @@ def test_gradient():
 
 	gradient = log_reg_model.calculate_gradient(y_train, X_test)
 	assert gradient.shape == log_reg_model.W.shape
-	assert gradient.shape == (X_train.shape[1] + 1) #+1 for bias term
+	assert gradient.shape == ((X_train.shape[1] + 1),) #+1 for bias term
 	
 
 def test_training():
