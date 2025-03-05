@@ -1,14 +1,3 @@
-"""
-Write your unit tests here. Some tests to include are listed below.
-This is not an exhaustive list.
-
-- check that prediction is working correctly
-- check that your loss function is being calculated correctly
-- check that your gradient is being calculated correctly
-- check that your weights update during training
-"""
-
-# Imports
 import pytest
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,47 +20,15 @@ X_train, X_val, y_train, y_val = utils.loadDataset(
 	split_seed=42
 )
 
-# Scale the data, since values vary across feature. Note that we
+# scale the data, since values vary across feature. Note that we
 # fit on the training data and use the same scaler for X_val.
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_val = sc.transform(X_val)
 
-#add bias term - padding data with vector of ones for bias term
-#X_train = np.hstack([X_train, np.ones((X_train.shape[0], 1))])
-#X_val = np.hstack([X_val, np.ones((X_val.shape[0], 1))])
-
 #initialize model
 log_reg_model = logreg.LogisticRegressor(num_feats=6)
 
-
-"""
-#load dataset
-df = pd.read_csv("./data/nsclc.csv")
-
-#choose features
-features = [
-	'Penicillin V Potassium 500 MG',
-	'Computed tomography of chest and abdomen',
-	'Plain chest X-ray (procedure)', 
-	'Low Density Lipoprotein Cholesterol',
-	'Creatinine',
-	'AGE_DIAGNOSIS'
-]
-X = df[features].values
-#add bias term - padding data with vector of ones for bias term
-#X = np.hstack([X, np.ones((X.shape[0], 1))])
-y = df['NSCLC'].values # 1 = NSCLC and 0 = small cell 
-
-
-#initialize model
-log_reg_model = logreg.LogisticRegressor(num_feats=6)
-
-#train model
-
-log_reg_model.train_model(X_train, y_train, X_val, y_val)
-
-"""
 
 def test_prediction():
 	#assert that predictions are within valid range 	[0,1]
@@ -81,6 +38,7 @@ def test_prediction():
 
 	y_pred = log_reg_model.make_prediction(X_test)
 	assert np.all(y_pred >= 0) and np.all(y_pred <= 1)
+
 
 def test_loss_function():
 	#assert that loss function returns a + scalar 
@@ -93,7 +51,6 @@ def test_loss_function():
 	assert loss >= 0
 	assert isinstance(loss, float)
 
-	
 
 def test_gradient():
 	#assert that gradient is of same shape as weights
@@ -103,7 +60,7 @@ def test_gradient():
 
 	gradient = log_reg_model.calculate_gradient(y_train, X_test)
 	assert gradient.shape == log_reg_model.W.shape
-	assert gradient.shape == (X_train.shape[1] + 1, 1) #+1 for bias term
+	assert gradient.shape == (X_train.shape[1] + 1) #+1 for bias term
 	
 
 def test_training():
