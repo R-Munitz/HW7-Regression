@@ -155,7 +155,7 @@ class LogisticRegressor(BaseRegressor):
             The mean loss (a single number).
         """
 
-        # binary cross entropy - from provided resource https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html
+        # binary cross entropy - from resource https://developer.ibm.com/articles/implementing-logistic-regression-from-scratch-in-python/#binary-logistic-regression-explained0
         y_zero_loss = y_true * np.log(y_pred + 1e-9)
         y_one_loss = (1-y_true) * np.log(1 - y_pred + 1e-9)
         return -np.mean(y_zero_loss + y_one_loss)
